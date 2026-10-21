@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   const router = useRouter();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -30,7 +30,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-purple-500 text-slate-900 p-8 flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-stone-200 text-slate-900 p-8 flex flex-col items-center justify-center">
       <div className="bg-slate-800 text-white p-6 rounded-xl w-full max-w-md shadow-lg">
         <h1 className="text-2xl font-bold mb-4 text-center">Login to Boardgamer</h1>
         {message && <p className="text-sm text-yellow-400 mb-4">{message}</p>}

@@ -11,7 +11,7 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleRegister = async (e) => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setMessage('Passwords do not match.');
@@ -36,7 +36,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-purple-500 text-slate-900 p-8 flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-stone-200 text-slate-900 p-8 flex flex-col items-center justify-center">
       <div className="bg-slate-800 text-white p-6 rounded-xl w-full max-w-md shadow-lg">
         <h1 className="text-2xl font-bold mb-4 text-center">Register</h1>
         {message && <p className="text-sm text-yellow-400 mb-4">{message}</p>}
