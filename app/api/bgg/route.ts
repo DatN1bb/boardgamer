@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
+    
     try {
-        const bggResponse = await fetch('https://boardgamegeek.com/xmlapi2/hot?boardgame');
+        const bggResponse = await fetch('https://boardgamegeek.com/xmlapi2/hot?type=boardgame', {
+            headers: {
+                'User-Agent': 'BoardGamerApp/1.0 (CV Project)',
+                'Authorization': `Bearer ${process.env.BGG_API_TOKEN}`,
+            },
+            cache: 'no-store',
+        });
         const xmlText = await bggResponse.text();
 
         return new NextResponse(xmlText, {

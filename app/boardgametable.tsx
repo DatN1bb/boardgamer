@@ -5,6 +5,8 @@ interface BoardGame {
     name: string;
     year: string;
     thumbnail: string;
+    description?: string;
+    rating?: string;
 }
 
 function BoardGameTable() {
