@@ -17,6 +17,9 @@ function BoardGameTable() {
     const [games, setGames] = useState<BoardGame[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedGame, setSelectedGame] = useState<BoardGame | null>(null);
+    const [addingGame, setAddingGame] = useState<BoardGame | null>(null);
+    const [rating, setRating] = useState('');
+    const [review, setReview] = useState('');
 
     useEffect(() => {
         const fetchBggGames = async () => {
@@ -95,7 +98,8 @@ function BoardGameTable() {
                         <th className="p-3 w-56">Name</th>
                         <th className="p-3">Description</th>
                         <th className="p-3 w-24">Rating</th>
-                        <th className="p-3 w-24">Year Published</th>
+                        <th className="p-3 w-24">Year</th>
+                        <th className="p-3 w-24"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,6 +114,18 @@ function BoardGameTable() {
                             </td>
                             <td className="p-3">{game.rating ? Number(game.rating).toFixed(1) : '—'}</td>
                             <td className="p-3">{game.year}</td>
+                            <td>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setRating('');
+                                        setReview('');
+                                        setAddingGame(game);
+                                    }}
+                                    className="px-3 py-1 bg-indigo-600 hover:bg-indigo-400 text-white rounded-lg cursor-pointer" >
+                                        Add
+                                    </button>
+                            </td>
                         </tr>
                     ))}
                     </tbody>
@@ -131,6 +147,49 @@ function BoardGameTable() {
                                 </div>
                             </div>
 
+                    )}
+                    {addingGame && (
+                        <div
+                        className="fixed inset-0 bg-slate-500 flex items-center justify-center p-4 z-50"
+                        onClick={() => setAddingGame(null)}>
+                                <div
+                                    className="bg-white rounded-lg max-w-md w-full p-6"
+                                    onClick={(e) => e.stopPropagation()}>
+
+                                        <h3 className="text-xl font-bold mb-4">Add {addingGame.name}</h3>
+
+                                        <label className="block mb-1 font-medium">Rating</label>
+                                        <select
+                                            value={rating}
+                                            onChange={(e) => setRating(e.target.value)}
+                                            className="w-full border border-slate-300 rounded p-2 mb-4">
+                                                <option value="">No Rating</option>
+                                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) =>(
+                                                    <option key={n} value={n}>{n}</option>
+                                                ))}
+                                            </select>
+
+                                            <label className="block mb-1 font-medium">Review (optional)</label>
+                                            <textarea
+                                                value={review}
+                                                onChange={(e) => setReview(e.target.value)}
+                                                rows={4}
+                                                className="w-full border border-slate-300 rounded p-2 mb-4"/>
+
+                                                <div className="flex justify-end gap-2">
+                                                    <button
+                                                        onClick={() => setAddingGame(null)}
+                                                        className="px-4 py-2 rounded-lg border border-slate-300 cursor-pointer">
+                                                            Cancel
+                                                        </button>
+                                                        <button
+                                                            onClick={() => console.log('save', addingGame.id, rating, review)}
+                                                            className="px-4 py-2 rounded-lg bg-indigo-600 text-white cursor-pointer">
+                                                                Add to Library
+                                                            </button>
+                                            </div>
+                                    </div>
+                            </div>
                     )}
                     </div>
 
